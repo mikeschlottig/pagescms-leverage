@@ -33,10 +33,20 @@ Use that if you want to:
 
 ### What you need
 
-- PostgreSQL
-- a GitHub App
-- a local `.env.local`
-- the Pages CMS repo checked out locally
+- **Database**: PostgreSQL (default), SQLite, or Cloudflare D1
+- **Storage** (optional): Cloudflare R2, AWS S3, or local filesystem
+- **LLM** (optional): Cloudflare Workers AI, OpenAI, Anthropic, or Ollama
+- A GitHub App
+- A local `.env.local`
+- The Pages CMS repo checked out locally
+
+### Deployment Options
+
+PagesCMS now supports multiple deployment targets:
+
+1. **Traditional**: Next.js on Vercel/Netlify with PostgreSQL
+2. **Cloudflare Workers**: Serverless with D1, R2, and KV (see [CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md))
+3. **Hybrid**: Mix and match based on your needs
 
 ### Quick start
 
@@ -65,6 +75,19 @@ npm install
 DATABASE_URL=postgresql://pagescms:pagescms@localhost:5432/pagescms
 BETTER_AUTH_SECRET=your-random-secret
 CRYPTO_KEY=your-random-secret
+```
+
+**Alternative database options:**
+
+```bash
+# SQLite (local development)
+DATABASE_URL=file:./local.db
+
+# libsql/Turso
+DATABASE_URL=libsql://your-db.turso.io
+LIBSQL_AUTH_TOKEN=your-token
+
+# Cloudflare D1 (configured in wrangler.toml, not .env.local)
 ```
 
 Optional but useful:
@@ -126,6 +149,8 @@ For more detail, see:
 - [Create the GitHub App](https://pagescms.org/docs/guides/installing/github-app/)
 - [Environment variables](https://pagescms.org/docs/development/environment-variables/)
 - [Caching](https://pagescms.org/docs/development/caching/)
+- [Cloudflare Workers Deployment](CLOUDFLARE_DEPLOYMENT.md) - Deploy to Cloudflare with D1, R2, and AI
+- [Enhancement Summary](ENHANCEMENT_SUMMARY.md) - Overview of new features
 
 ## Support the project
 

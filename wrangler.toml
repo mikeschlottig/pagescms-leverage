@@ -1,0 +1,68 @@
+# Cloudflare Workers Configuration for PagesCMS
+# This configuration enables deployment to Cloudflare Workers with D1, R2, and KV support
+
+name = "pagescms"
+main = "src/worker.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Node.js compatibility for Next.js adaptation
+node_compat = true
+
+# Environment Variables
+[vars]
+ENVIRONMENT = "production"
+# BETTER_AUTH_SECRET should be set via secrets
+# CRYPTO_KEY should be set via secrets
+# GITHUB_APP_* variables should be set via secrets
+
+# D1 Database Binding (for Cloudflare D1)
+[[d1_databases]]
+binding = "D1_DATABASE"
+database_name = "pagescms"
+database_id = ""  # Replace with your D1 database ID after creation
+
+# R2 Object Storage Binding (for media/files)
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "pagescms-media"
+preview_bucket_name = "pagescms-media-preview"
+
+# KV Namespace for caching (optional, for session/cache)
+[[kv_namespaces]]
+binding = "CACHE_KV"
+id = ""  # Replace with your KV namespace ID
+preview_id = ""  # Replace with preview namespace ID
+
+# AI Binding for LLM integration (Cloudflare Workers AI)
+[ai]
+binding = "AI"
+
+# Routes (if using custom domain)
+# [[routes]]
+# pattern = "cms.yourdomain.com/*"
+# zone_name = "yourdomain.com"
+
+# Development configuration
+[dev]
+port = 8787
+local_protocol = "http"
+
+# Production build settings
+[build]
+command = "npm run build:worker"
+
+# Minification for production
+[minify]
+enabled = true
+
+# Wrangler environment overrides
+[env.staging]
+name = "pagescms-staging"
+[env.staging.vars]
+ENVIRONMENT = "staging"
+
+[env.production]
+name = "pagescms-production"
+[env.production.vars]
+ENVIRONMENT = "production"

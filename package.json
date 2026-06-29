@@ -16,10 +16,19 @@
     "lint": "eslint .",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
+    "db:generate:sqlite": "npx drizzle-kit generate --dialect sqlite",
+    "db:migrate:sqlite": "npx drizzle-kit migrate --dialect sqlite",
     "auth:generate": "npx @better-auth/cli generate --config ./lib/auth.ts --output ./auth-schema.ts --yes",
     "db:clear-cache": "npx tsx db/scripts/clear-cache.ts",
     "db:collaborators:export": "npx tsx db/scripts/collaborators/export.ts",
-    "db:collaborators:import": "npx tsx db/scripts/collaborators/import.ts"
+    "db:collaborators:import": "npx tsx db/scripts/collaborators/import.ts",
+    "dev:worker": "wrangler dev",
+    "deploy:worker": "wrangler deploy",
+    "build:worker": "npm run build && wrangler deploy --dry-run",
+    "d1:create": "wrangler d1 create pagescms",
+    "d1:migrate": "wrangler d1 execute pagescms --local",
+    "r2:create": "wrangler r2 bucket create pagescms-media",
+    "kv:create": "wrangler kv:namespace create CACHE_KV"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
@@ -86,7 +95,17 @@
     "turndown": "^7.2.0",
     "use-debounce": "^10.0.0",
     "yaml": "^2.4.2",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@libsql/client": "^0.14.0",
+    "better-sqlite3": "^11.8.1",
+    "sql.js": "^1.12.0",
+    "openai": "^4.85.0",
+    "@anthropic-ai/sdk": "^0.36.0",
+    "@aws-sdk/client-s3": "^3.750.0",
+    "@aws-sdk/s3-request-presigner": "^3.750.0"
+  },
+  "optionalDependencies": {
+    "wrangler": "^3.109.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
