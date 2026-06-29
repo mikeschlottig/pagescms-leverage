@@ -288,9 +288,14 @@ class LocalStorage implements StorageAdapter {
     
     await fs.mkdir(dir, { recursive: true });
     
-    const data = content instanceof Buffer || content instanceof ArrayBuffer 
-      ? content 
-      : Buffer.from(content);
+    let data: Buffer;
+    if (content instanceof Buffer) {
+      data = content;
+    } else if (content instanceof ArrayBuffer) {
+      data = Buffer.from(new Uint8Array(content));
+    } else {
+      data = Buffer.from(content);
+    }
     
     await fs.writeFile(filePath, data);
   }
@@ -328,14 +333,15 @@ class LocalStorage implements StorageAdapter {
     const path = require("path");
     
     const searchPath = prefix ? path.join(this.basePath, prefix) : this.basePath;
+    const basePath = this.basePath; // Capture this.basePath for use in nested function
     
-    async function walkDir(dir: string): Promise<string[]> {
+    const walkDir = async (dir: string): Promise<string[]> => {
       const results: string[] = [];
       const entries = await fs.readdir(dir, { withFileTypes: true });
       
       for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
-        const relativePath = path.relative(this.basePath, fullPath);
+        const relativePath = path.relative(basePath, fullPath);
         
         if (entry.isDirectory()) {
           const subResults = await walkDir(fullPath);
@@ -346,7 +352,7 @@ class LocalStorage implements StorageAdapter {
       }
       
       return results;
-    }
+    };
 
     return await walkDir(searchPath);
   }

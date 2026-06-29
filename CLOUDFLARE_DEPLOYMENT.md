@@ -181,7 +181,7 @@ DELETE /api/v1/entries/:owner/:repo/:collection/:path
 
 **Example: List entries**
 ```bash
-curl -H "Authorization: Bearer YOUR_TOKEN" \
+curl -H "Authorization: Bearer <YOUR_API_TOKEN>" \
   "https://your-cms.com/api/v1/entries/owner/repo/posts?limit=10&offset=0"
 ```
 
@@ -201,7 +201,7 @@ Response:
 **Example: Create entry**
 ```bash
 curl -X POST \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: Bearer <YOUR_API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
     "data": {
@@ -237,7 +237,7 @@ POST /api/ai/embed         # Generate embeddings
 **Example: Chat**
 ```bash
 curl -X POST \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: Bearer <YOUR_API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
     "messages": [

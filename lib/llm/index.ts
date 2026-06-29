@@ -260,7 +260,7 @@ class AnthropicLLM implements LLMService {
       system: systemPrompt,
       messages: userMessages.map(msg => ({
         role: msg.role === "assistant" ? "assistant" : "user",
-        content: msg.content,
+        content: [{ type: "text", text: msg.content }],
       })),
     });
 
