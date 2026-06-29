@@ -185,6 +185,19 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
   "https://your-cms.com/api/v1/entries/owner/repo/posts?limit=10&offset=0"
 ```
 
+Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "entries": [...],
+    "total": 100,
+    "limit": 10,
+    "offset": 0
+  }
+}
+```
+
 **Example: Create entry**
 ```bash
 curl -X POST \
@@ -198,6 +211,18 @@ curl -X POST \
     "message": "Creating new post"
   }' \
   "https://your-cms.com/api/v1/entries/owner/repo/posts"
+```
+
+Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "path": "content/posts/my-post.md",
+    "sha": "abc123...",
+    "url": "https://github.com/owner/repo/blob/main/content/posts/my-post.md"
+  }
+}
 ```
 
 #### AI/LLM API
@@ -224,6 +249,22 @@ curl -X POST \
     }
   }' \
   "https://your-cms.com/api/ai/chat"
+```
+
+Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "content": "Here's a draft for your blog post...",
+    "model": "@cf/meta/llama-3-8b-instruct",
+    "usage": {
+      "promptTokens": 25,
+      "completionTokens": 150,
+      "totalTokens": 175
+    }
+  }
+}
 ```
 
 ## Database Schema Migration

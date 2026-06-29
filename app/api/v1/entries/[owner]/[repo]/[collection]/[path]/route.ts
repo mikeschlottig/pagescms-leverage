@@ -232,7 +232,7 @@ export async function DELETE(
     }
 
     // Delete the file
-    await octokit.rest.repos.deleteFile({
+    const deleteResponse = await octokit.rest.repos.deleteFile({
       owner: params.owner,
       repo: params.repo,
       path: params.path,
@@ -245,6 +245,8 @@ export async function DELETE(
       status: "success",
       data: {
         path: params.path,
+        sha: deleteResponse.data.commit.sha,
+        url: deleteResponse.data.commit.html_url,
         deleted: true,
       },
     });
