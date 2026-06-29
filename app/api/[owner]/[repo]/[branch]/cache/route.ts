@@ -69,8 +69,8 @@ export async function GET(
       );
     const cachedConfig = await db.query.configTable.findFirst({
       where: and(
-        sql`lower(${configTable.owner}) = lower(${params.owner})`,
-        sql`lower(${configTable.repo}) = lower(${params.repo})`,
+        eq(sql`lower(${configTable.owner})`, params.owner.toLowerCase()),
+        eq(sql`lower(${configTable.repo})`, params.repo.toLowerCase()),
         eq(configTable.branch, params.branch),
       ),
     });
@@ -179,8 +179,8 @@ export async function POST(
           .delete(configTable)
           .where(
             and(
-              sql`lower(${configTable.owner}) = lower(${params.owner})`,
-              sql`lower(${configTable.repo}) = lower(${params.repo})`,
+              eq(sql`lower(${configTable.owner})`, params.owner.toLowerCase()),
+              eq(sql`lower(${configTable.repo})`, params.repo.toLowerCase()),
               eq(configTable.branch, params.branch),
             ),
           );
@@ -201,8 +201,8 @@ export async function POST(
           .delete(configTable)
           .where(
             and(
-              sql`lower(${configTable.owner}) = lower(${params.owner})`,
-              sql`lower(${configTable.repo}) = lower(${params.repo})`,
+              eq(sql`lower(${configTable.owner})`, params.owner.toLowerCase()),
+              eq(sql`lower(${configTable.repo})`, params.repo.toLowerCase()),
               eq(configTable.branch, params.branch),
             ),
           );

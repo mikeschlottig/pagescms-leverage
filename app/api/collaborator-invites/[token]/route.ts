@@ -34,9 +34,9 @@ const getInvite = async (token: string) => {
 
   const collaborator = await db.query.collaboratorTable.findFirst({
     where: and(
-      sql`lower(${collaboratorTable.email}) = lower(${invite.email})`,
-      sql`lower(${collaboratorTable.owner}) = lower(${invite.owner})`,
-      sql`lower(${collaboratorTable.repo}) = lower(${invite.repo})`,
+      eq(sql`lower(${collaboratorTable.email})`, invite.email.toLowerCase()),
+      eq(sql`lower(${collaboratorTable.owner})`, invite.owner.toLowerCase()),
+      eq(sql`lower(${collaboratorTable.repo})`, invite.repo.toLowerCase()),
     ),
   });
 
@@ -75,9 +75,9 @@ const claimInvite = async (
     .set({ userId: user.id })
     .where(
       and(
-        sql`lower(${collaboratorTable.email}) = lower(${invite.email})`,
-        sql`lower(${collaboratorTable.owner}) = lower(${invite.owner})`,
-        sql`lower(${collaboratorTable.repo}) = lower(${invite.repo})`,
+        eq(sql`lower(${collaboratorTable.email})`, invite.email.toLowerCase()),
+        eq(sql`lower(${collaboratorTable.owner})`, invite.owner.toLowerCase()),
+        eq(sql`lower(${collaboratorTable.repo})`, invite.repo.toLowerCase()),
       ),
     );
 
